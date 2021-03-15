@@ -1,9 +1,10 @@
 LOCAL_PATH := $(abspath $(call my-dir))
 include $(CLEAR_VARS)
 
-LOCAL_MODULE := libjpeg-turbo
+//LOCAL_MODULE := libjpeg-turbo
+LOCAL_MODULE := libturbojpeg
 
-SOURCE_PATH := libjpeg-turbo-2.0.1
+SOURCE_PATH := libjpeg-turbo-2.0.6
 
 ifneq ($(filter $(TARGET_ARCH_ABI), armeabi-v7a armeabi-v7a-hard x86),)
 LOCAL_ARM_NEON := true
@@ -172,6 +173,12 @@ LOCAL_SRC_FILES += \
 	$(SOURCE_PATH)/jutils.c \
 	$(SOURCE_PATH)/jmemmgr.c \
 	$(SOURCE_PATH)/jmemnobs.c \
+	$(SOURCE_PATH)/cdjpeg.c \
+	$(SOURCE_PATH)/rdbmp.c \
+	$(SOURCE_PATH)/wrbmp.c \
+	$(SOURCE_PATH)/rdppm.c \
+	$(SOURCE_PATH)/wrppm.c \
+	$(SOURCE_PATH)/turbojpeg-jni.c \
 
 # if WITH_ARITH_ENC from Makefile.am
 LOCAL_SRC_FILES += \
@@ -201,11 +208,11 @@ LOCAL_EXPORT_C_INCLUDES := \
 	$(LOCAL_PATH)/$(SOURCE_PATH) \
 
 LOCAL_CFLAGS += \
-	-DBUILD="\"20181112\"" \
+	-DBUILD="\"20201117\"" \
 	-DPACKAGE_NAME="\"libjpeg-turbo\"" \
-	-DVERSION="\"2.0.1\"" \
-	-DLIBJPEG_TURBO_VERSION="2.0.1" \
-	-DJPEG_LIB_VERSION=62 \
+	-DVERSION="\"2.0.6\"" \
+	-DLIBJPEG_TURBO_VERSION="2.0.6" \
+	-DJPEG_LIB_VERSION=80 \
 	-DC_ARITH_CODING_SUPPORTED=1 \
 	-DD_ARITH_CODING_SUPPORTED=1 \
 	-DBITS_IN_JSAMPLE=8 \
@@ -230,5 +237,8 @@ LOCAL_CFLAGS += \
 	-DNEED_SYS_TYPES_H=1 \
 	-DSTDC_HEADERS=1 \
 	-DWITH_SIMD=1 \
+	-DPPM_SUPPORTED=1 \
+	-DBMP_SUPPORTED=1 \
 
-include $(BUILD_STATIC_LIBRARY)
+#include $(BUILD_STATIC_LIBRARY)
+include $(BUILD_SHARED_LIBRARY)
